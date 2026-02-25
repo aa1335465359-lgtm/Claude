@@ -1,0 +1,5 @@
+{
+  "name": "Claude",
+  "description": "A local, private web interface for interacting with AI models using custom environment configurations.",
+  "requestFramePermissions": []
+}
