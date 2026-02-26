@@ -100,9 +100,9 @@ const MarkdownRenderer = React.memo(({ content }: { content: string }) => (
   <ReactMarkdown
     remarkPlugins={[remarkGfm]}
     components={{
-      h1: ({children}) => <h1 className="text-2xl font-semibold text-gray-900 dark:text-[#ececec] mt-8 mb-4 font-sans tracking-tight">{children}</h1>,
-      h2: ({children}) => <h2 className="text-xl font-semibold text-gray-900 dark:text-[#ececec] mt-6 mb-3 font-sans tracking-tight">{children}</h2>,
-      h3: ({children}) => <h3 className="text-lg font-medium text-gray-900 dark:text-[#ececec] mt-4 mb-2 font-sans">{children}</h3>,
+      h1: ({children}) => <h1 className="text-2xl font-semibold text-gray-900 dark:text-[#ececec] mt-8 mb-4 font-serif tracking-tight">{children}</h1>,
+      h2: ({children}) => <h2 className="text-xl font-semibold text-gray-900 dark:text-[#ececec] mt-6 mb-3 font-serif tracking-tight">{children}</h2>,
+      h3: ({children}) => <h3 className="text-lg font-medium text-gray-900 dark:text-[#ececec] mt-4 mb-2 font-serif">{children}</h3>,
       p: ({children}) => <p className="mb-4 leading-relaxed text-gray-700 dark:text-[#ccc] last:mb-0">{children}</p>,
       ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-1.5 text-gray-700 dark:text-[#ccc] marker:text-gray-400 dark:marker:text-[#666]">{children}</ul>,
       ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-1.5 text-gray-700 dark:text-[#ccc] marker:text-gray-400 dark:marker:text-[#666]">{children}</ol>,
@@ -174,7 +174,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const renderContent = () => {
     if (typeof message.content === 'string') {
         if (isUser) {
-             return <div className="whitespace-pre-wrap text-gray-900 dark:text-[#ececec] font-sans">{message.content}</div>;
+             return <div className="whitespace-pre-wrap text-gray-900 dark:text-[#ececec] font-serif">{message.content}</div>;
         }
 
         if (!message.content) {
@@ -237,7 +237,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                     }
                     if (block.type === 'text' && block.text) {
                         return isUser ? 
-                            <div key={idx} className="whitespace-pre-wrap text-gray-900 dark:text-[#ececec] font-sans">{block.text}</div> : 
+                            <div key={idx} className="whitespace-pre-wrap text-gray-900 dark:text-[#ececec] font-serif">{block.text}</div> : 
                             <MarkdownRenderer key={idx} content={block.text} />;
                     }
                     return null;
@@ -285,7 +285,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
             prose dark:prose-invert max-w-none text-[16px] leading-7 font-serif relative z-10 bg-transparent
             ${isError ? 'text-red-500 dark:text-red-300 bg-red-50 dark:bg-red-900/20 p-5 rounded-2xl border border-red-200 dark:border-red-500/30 font-sans backdrop-blur-sm' : ''}
         `}>
-           {isUser ? null : <div className="font-semibold text-gray-900 dark:text-[#ececec] text-sm mb-3 font-sans flex items-center gap-2 tracking-wide">AI</div>}
+           {isUser ? null : <div className="font-semibold text-gray-900 dark:text-[#ececec] text-sm mb-3 font-serif flex items-center gap-2 tracking-wide">AI</div>}
            {renderContent()}
         </div>
 

@@ -19,23 +19,11 @@ export const streamCompletion = async (
 
   try {
     // Determine if thinking should be enabled based on model.
-    const isThinkingModel = modelId.includes("sonnet") || modelId.includes("opus");
+    const isThinkingModel = true; // All models support thinking toggle now
 
     // Default Configuration
-    let maxTokens = 8192; 
-    let budgetTokens = 4096; // Conservative default
-
-    // Special handling for Opus 4.6 (1M context support)
-    if (modelId.includes("opus-4-6")) {
-        maxTokens = 1000000; // 1M tokens Output
-        // User requested massive budget. 
-        // We reserve 200k for final text response, give 800k to thinking if deep mode.
-        budgetTokens = 500000; 
-    } else if (isThinkingModel) {
-        // Sonnet 3.7 and others typically cap at 64k output
-        maxTokens = 64000;
-        budgetTokens = 32000; // Maximize thinking within the 64k limit (half think, half write)
-    }
+    let maxTokens = 1000000; // No limit on output context
+    let budgetTokens = 500000; // Large budget for thinking
 
     const requestBody: any = {
       model: modelId,

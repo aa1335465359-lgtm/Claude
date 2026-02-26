@@ -50,21 +50,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
   }, [input]);
 
   const getModelDisplayName = (model: string) => {
-    if (model === 'claude-3-7-sonnet-20250219') return 'Claude 3.7 Sonnet';
-    if (model === 'claude-haiku-4-5-20251001') return 'Claude Haiku 4.5 (20251001)';
-    if (model === 'claude-haiku-4-5') return 'Claude Haiku 4.5';
-    if (model === 'claude-opus-4-5') return 'Claude Opus 4.5';
-    if (model === 'claude-sonnet-4') return 'Claude Sonnet 4';
-    if (model === 'claude-sonnet-4-5-20250929') return 'Claude Sonnet 4.5 (20250929)';
-    if (model === 'minimax-m2-1') return 'MiniMax M2.1';
-    if (model === 'qwen3-coder-next') return 'Qwen3 Coder Next';
-    if (model === 'claude-sonnet-4-6') return 'Claude Sonnet 4.6';
-    if (model === 'claude-sonnet-4-20250514') return 'Claude Sonnet 4 (20250514)';
-    if (model === 'claude-opus-4-5-20251101') return 'Claude Opus 4.5 (20251101)';
+    if (model === 'gpt-5.3-codex') return 'GPT-5.3 Codex';
+    if (model === 'gpt-5.2') return 'GPT-5.2';
     if (model === 'claude-opus-4-6') return 'Claude Opus 4.6';
-    if (model === 'claude-sonnet-4-5') return 'Claude Sonnet 4.5';
+    if (model === 'qwen3-coder-next') return 'Qwen3 Coder Next';
+    if (model === 'minimax-m2-1') return 'MiniMax M2.1';
+    if (model === 'claude-sonnet-4-6') return 'Claude Sonnet 4.6';
     if (model === 'deepseek-3-2') return 'DeepSeek 3.2';
+    if (model === 'claude-haiku-4-5') return 'Claude Haiku 4.5';
     
+    if (model.includes('gpt')) return model.toUpperCase();
     if (model.includes('opus-4-6')) return 'Opus 4.6';
     if (model.includes('opus-4-5')) return 'Opus 4.5';
     if (model.includes('sonnet-4-5')) return 'Sonnet 4.5';
@@ -192,7 +187,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2">
-                        {(currentModel.includes('sonnet') || currentModel.includes('opus')) && (
                             <div className="relative" ref={thinkingMenuRef}>
                             <button
                                 onClick={() => setIsThinkingMenuOpen(!isThinkingMenuOpen)}
@@ -227,7 +221,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
                                 </div>
                             )}
                             </div>
-                        )}
 
                     <div className="relative" ref={modelMenuRef}>
                         <button 
