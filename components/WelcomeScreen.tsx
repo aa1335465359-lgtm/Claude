@@ -45,7 +45,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSuggestionClick }) => {
         initial={{ opacity: 0, filter: 'blur(10px)' }}
         animate={{ opacity: 1, filter: 'blur(0px)' }}
         transition={{ duration: 1, delay: 0.1 }}
-        className="text-3xl md:text-4xl font-medium text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 mb-4 font-serif tracking-wide"
+        className="text-3xl md:text-4xl font-medium text-transparent bg-clip-text bg-gradient-to-b from-gray-900 to-gray-600 dark:from-white dark:to-white/60 mb-4 font-serif tracking-wide"
       >
         {greeting}
       </motion.h2>
@@ -53,7 +53,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSuggestionClick }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="text-[#888] mb-12 text-sm font-light tracking-wide"
+        className="text-gray-500 dark:text-[#888] mb-12 text-sm font-light tracking-wide"
       >
         随时准备为您提供协助、解答疑惑或激发创意。
       </motion.p>
@@ -68,13 +68,13 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSuggestionClick }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
                 onClick={() => onSuggestionClick(item.text)} 
-                className="group relative bg-white/[0.02] hover:bg-white/[0.04] p-5 rounded-2xl text-left transition-all duration-300 border border-white/[0.05] hover:border-white/[0.1] hover:shadow-[0_0_30px_rgba(255,255,255,0.03)] active:scale-[0.98] overflow-hidden flex items-center gap-4"
+                className="group relative bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.04] p-5 rounded-2xl text-left transition-all duration-300 border border-black/5 dark:border-white/[0.05] hover:border-black/10 dark:hover:border-white/[0.1] shadow-sm hover:shadow-md dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.03)] active:scale-[0.98] overflow-hidden flex items-center gap-4"
               >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="p-2 rounded-xl bg-white/[0.05] text-[#888] group-hover:text-white transition-colors duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/[0.01] dark:from-white/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] text-gray-600 dark:text-[#888] group-hover:text-black dark:group-hover:text-white transition-colors duration-300">
                     <Icon size={18} strokeWidth={1.5} />
                   </div>
-                  <span className="text-sm text-[#aaa] group-hover:text-white transition-colors duration-300 leading-relaxed font-medium">
+                  <span className="text-sm text-gray-600 dark:text-[#aaa] group-hover:text-black dark:group-hover:text-white transition-colors duration-300 leading-relaxed font-medium">
                     {item.text}
                   </span>
               </motion.button>

@@ -155,14 +155,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
   return (
     <div className="w-full px-4 shrink-0 z-10">
         <div className="max-w-3xl mx-auto">
-            <div className={`bg-[#111] border rounded-3xl shadow-2xl transition-all duration-300 relative flex flex-col ${isLoading ? 'border-white/[0.05]' : 'border-white/[0.08] focus-within:border-white/[0.2] focus-within:bg-[#151515] hover:border-white/[0.15]'}`}>
+            <div className={`bg-white dark:bg-[#111] border rounded-3xl shadow-xl dark:shadow-2xl transition-all duration-300 relative flex flex-col ${isLoading ? 'border-black/5 dark:border-white/[0.05]' : 'border-black/10 dark:border-white/[0.08] focus-within:border-black/20 dark:focus-within:border-white/[0.2] focus-within:bg-gray-50 dark:focus-within:bg-[#151515] hover:border-black/15 dark:hover:border-white/[0.15]'}`}>
             
             {attachments.length > 0 && (
                 <div className="flex gap-3 px-4 pt-4 overflow-x-auto">
                     {attachments.map((att, index) => (
-                        <div key={index} className="relative group flex-shrink-0 bg-black/40 border border-white/10 rounded-xl p-2 w-16 h-16 flex flex-col items-center justify-center backdrop-blur-sm transition-all hover:border-white/20">
-                                <button onClick={() => removeAttachment(index)} className="absolute -top-2 -right-2 bg-neutral-800 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-all hover:bg-neutral-700 hover:scale-110 shadow-lg border border-white/10"><X size={12} /></button>
-                                {att.type === 'image' ? <img src={`data:${att.mediaType};base64,${att.data}`} className="w-full h-full object-cover rounded-lg" alt="att" /> : <FileText className="text-neutral-400" size={24} strokeWidth={1.5} />}
+                        <div key={index} className="relative group flex-shrink-0 bg-black/5 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-2 w-16 h-16 flex flex-col items-center justify-center backdrop-blur-sm transition-all hover:border-black/20 dark:hover:border-white/20">
+                                <button onClick={() => removeAttachment(index)} className="absolute -top-2 -right-2 bg-white dark:bg-neutral-800 text-gray-900 dark:text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 dark:hover:bg-neutral-700 hover:scale-110 shadow-lg border border-black/10 dark:border-white/10"><X size={12} /></button>
+                                {att.type === 'image' ? <img src={`data:${att.mediaType};base64,${att.data}`} className="w-full h-full object-cover rounded-lg" alt="att" /> : <FileText className="text-gray-400 dark:text-neutral-400" size={24} strokeWidth={1.5} />}
                         </div>
                     ))}
                 </div>
@@ -175,7 +175,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 onKeyDown={handleKeyDown}
                 onPaste={handlePaste}
                 placeholder="发送消息..."
-                className="w-full bg-transparent text-[#ececec] text-[15px] px-5 pt-4 pb-12 min-h-[56px] max-h-[300px] resize-none focus:outline-none placeholder-[#666] leading-relaxed"
+                className="w-full bg-transparent text-gray-900 dark:text-[#ececec] text-[15px] px-5 pt-4 pb-16 min-h-[56px] max-h-[300px] resize-none focus:outline-none placeholder-gray-400 dark:placeholder-[#666] leading-relaxed"
                 rows={1}
             />
             
@@ -184,7 +184,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     <input type="file" ref={fileInputRef} className="hidden" multiple onChange={handleFileSelect} accept="image/*,.txt,.md,.js,.ts,.json" />
                     <button 
                         onClick={() => fileInputRef.current?.click()}
-                        className="p-2 text-[#888] hover:text-[#ececec] hover:bg-white/10 rounded-xl transition-all flex items-center gap-2 group"
+                        className="p-2 text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-[#ececec] hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition-all flex items-center gap-2 group"
                         title="添加附件"
                     >
                         <Paperclip size={18} strokeWidth={1.5} />
@@ -196,33 +196,33 @@ const ChatInput: React.FC<ChatInputProps> = ({
                             <div className="relative" ref={thinkingMenuRef}>
                             <button
                                 onClick={() => setIsThinkingMenuOpen(!isThinkingMenuOpen)}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all text-xs font-medium border ${thinkingMode === 'deep' ? 'bg-purple-500/10 text-purple-300 border-purple-500/20' : 'border-transparent hover:bg-white/10 text-[#999]'}`}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all text-xs font-medium border ${thinkingMode === 'deep' ? 'bg-purple-100 dark:bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-200 dark:border-purple-500/20' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/10 text-gray-500 dark:text-[#999]'}`}
                             >
                                 {thinkingMode === 'deep' ? <Brain size={14} strokeWidth={1.5} /> : <Zap size={14} strokeWidth={1.5} />}
                                 <span>{thinkingMode === 'deep' ? '深度思考' : '快速模式'}</span>
                             </button>
                             
                             {isThinkingMenuOpen && (
-                                <div className="absolute bottom-full right-0 mb-2 w-48 bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl py-1 z-30 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                                <div className="absolute bottom-full right-0 mb-2 w-48 bg-white/95 dark:bg-[#1a1a1a]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl py-1 z-30 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                     <button
                                         onClick={() => { setThinkingMode('adaptive'); setIsThinkingMenuOpen(false); }}
-                                        className="w-full text-left px-4 py-3 text-sm flex items-center gap-3 hover:bg-white/5 text-[#ccc] transition-colors"
+                                        className="w-full text-left px-4 py-3 text-sm flex items-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 text-gray-700 dark:text-[#ccc] transition-colors"
                                     >
                                         <div className="flex flex-col">
-                                            <span className="font-medium text-white">快速模式</span>
-                                            <span className="text-[10px] text-[#777] mt-0.5">快速响应，适合日常</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">快速模式</span>
+                                            <span className="text-[10px] text-gray-500 dark:text-[#777] mt-0.5">快速响应，适合日常</span>
                                         </div>
-                                        {thinkingMode === 'adaptive' && <Check size={14} className="ml-auto text-white" />}
+                                        {thinkingMode === 'adaptive' && <Check size={14} className="ml-auto text-gray-900 dark:text-white" />}
                                     </button>
                                     <button
                                         onClick={() => { setThinkingMode('deep'); setIsThinkingMenuOpen(false); }}
-                                        className="w-full text-left px-4 py-3 text-sm flex items-center gap-3 hover:bg-white/5 text-[#ccc] transition-colors"
+                                        className="w-full text-left px-4 py-3 text-sm flex items-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 text-gray-700 dark:text-[#ccc] transition-colors"
                                     >
                                         <div className="flex flex-col">
-                                            <span className="font-medium text-white">深度思考</span>
-                                            <span className="text-[10px] text-[#777] mt-0.5">更强推理，适合复杂问题</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">深度思考</span>
+                                            <span className="text-[10px] text-gray-500 dark:text-[#777] mt-0.5">更强推理，适合复杂问题</span>
                                         </div>
-                                        {thinkingMode === 'deep' && <Check size={14} className="ml-auto text-white" />}
+                                        {thinkingMode === 'deep' && <Check size={14} className="ml-auto text-gray-900 dark:text-white" />}
                                     </button>
                                 </div>
                             )}
@@ -232,15 +232,15 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     <div className="relative" ref={modelMenuRef}>
                         <button 
                             onClick={() => setIsModelMenuOpen(!isModelMenuOpen)}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all text-xs font-medium border border-transparent ${isModelMenuOpen ? 'bg-white/10 text-[#ececec]' : 'hover:bg-white/10 text-[#999] hover:text-[#ececec]'}`}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all text-xs font-medium border border-transparent ${isModelMenuOpen ? 'bg-black/5 dark:bg-white/10 text-gray-900 dark:text-[#ececec]' : 'hover:bg-black/5 dark:hover:bg-white/10 text-gray-500 dark:text-[#999] hover:text-gray-900 dark:hover:text-[#ececec]'}`}
                         >
                             {getModelDisplayName(currentModel)}
                             {isModelMenuOpen ? <ChevronUp size={14} strokeWidth={1.5} /> : <ChevronDown size={14} strokeWidth={1.5} />}
                         </button>
 
                         {isModelMenuOpen && (
-                            <div className="absolute bottom-full right-0 mb-2 w-56 bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl py-2 z-30 max-h-72 overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
-                                <div className="px-4 py-2 text-[10px] font-bold text-[#666] uppercase tracking-wider">选择模型</div>
+                            <div className="absolute bottom-full right-0 mb-2 w-56 bg-white/95 dark:bg-[#1a1a1a]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl py-2 z-30 max-h-72 overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+                                <div className="px-4 py-2 text-[10px] font-bold text-gray-500 dark:text-[#666] uppercase tracking-wider">选择模型</div>
                                 {AVAILABLE_MODELS.map((model) => {
                                     const isSelected = currentModel === model;
                                     return (
@@ -250,10 +250,10 @@ const ChatInput: React.FC<ChatInputProps> = ({
                                                 setCurrentModel(model);
                                                 setIsModelMenuOpen(false);
                                             }}
-                                            className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between hover:bg-white/5 transition-colors ${isSelected ? 'text-white bg-white/5 font-medium' : 'text-[#bbb]'}`}
+                                            className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${isSelected ? 'text-gray-900 dark:text-white bg-black/5 dark:bg-white/5 font-medium' : 'text-gray-600 dark:text-[#bbb]'}`}
                                         >
                                             <span className="truncate">{getModelDisplayName(model)}</span>
-                                            {isSelected && <Check size={14} className="text-white" />}
+                                            {isSelected && <Check size={14} className="text-gray-900 dark:text-white" />}
                                         </button>
                                     );
                                 })}
@@ -266,10 +266,10 @@ const ChatInput: React.FC<ChatInputProps> = ({
                         disabled={!isLoading && !input.trim() && attachments.length === 0}
                         className={`p-2 rounded-xl transition-all duration-300 flex items-center justify-center ${
                             isLoading 
-                            ? 'bg-white/10 text-[#ccc] hover:bg-white/20 animate-pulse'
+                            ? 'bg-black/10 dark:bg-white/10 text-gray-600 dark:text-[#ccc] hover:bg-black/20 dark:hover:bg-white/20 animate-pulse'
                             : (input.trim() || attachments.length > 0)
-                                ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-105' 
-                                : 'bg-white/5 text-[#666] cursor-not-allowed'
+                                ? 'bg-black dark:bg-white text-white dark:text-black shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-105' 
+                                : 'bg-black/5 dark:bg-white/5 text-gray-400 dark:text-[#666] cursor-not-allowed'
                         }`}
                     >
                         {isLoading ? <Square size={18} fill="currentColor" /> : <ArrowUp size={18} strokeWidth={2.5} />}
@@ -279,7 +279,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             </div>
             
             <div className="text-center mt-4">
-                <p className="text-[11px] text-[#555] select-none font-medium">AI 可能会犯错。请务必核实重要信息。</p>
+                <p className="text-[11px] text-gray-400 dark:text-[#555] select-none font-medium">AI 可能会犯错。请务必核实重要信息。</p>
             </div>
         </div>
     </div>

@@ -6,8 +6,9 @@ import { DEFAULT_MODEL } from '../constants';
 export function useChat(
   currentSessionId: string | null,
   messages: Message[],
-  updateCurrentSessionMessages: (newMessages: Message[]) => void,
-  setSessions: any
+  updateCurrentSessionMessages: (newMessages: Message[], sessionId?: string) => void,
+  setSessions: any,
+  createNewSession: () => string
 ) {
   const [input, setInput] = useState('');
   const [attachments, setAttachments] = useState<Attachment[]>([]);
@@ -31,7 +32,15 @@ export function useChat(
         return;
     }
 
-    if ((!input.trim() && attachments.length === 0) || !currentSessionId) return;
+    if (!input.trim() && attachments.length === 0) return;
+
+    let targetSessionId = currentSessionId;
+    let currentMessages = messages;
+
+    if (!targetSessionId) {
+        targetSessionId = createNewSession();
+        currentMessages = [];
+    }
 
     let content: ContentBlock[] | string = input.trim();
 
@@ -58,8 +67,8 @@ export function useChat(
       timestamp: Date.now()
     };
 
-    const updatedHistory = [...messages, userMessage];
-    updateCurrentSessionMessages(updatedHistory);
+    const updatedHistory = [...currentMessages, userMessage];
+    updateCurrentSessionMessages(updatedHistory, targetSessionId);
     setInput('');
     setAttachments([]);
     setIsLoading(true);
@@ -71,7 +80,7 @@ export function useChat(
         content: '',
         timestamp: Date.now()
     }];
-    updateCurrentSessionMessages(historyWithPlaceholder);
+    updateCurrentSessionMessages(historyWithPlaceholder, targetSessionId);
 
     abortControllerRef.current = new AbortController();
 
@@ -84,7 +93,7 @@ export function useChat(
       (textChunk) => {
         fullContent += textChunk;
         setSessions((prev: any) => prev.map((s: any) => {
-            if (s.id === currentSessionId) {
+            if (s.id === targetSessionId) {
                 const newMsgs = s.messages.map((msg: any) => 
                     msg.id === assistantId ? { ...msg, content: fullContent } : msg
                 );
@@ -99,7 +108,7 @@ export function useChat(
       },
       (error) => {
         setSessions((prev: any) => prev.map((s: any) => {
-            if (s.id === currentSessionId) {
+            if (s.id === targetSessionId) {
                 const newMsgs = s.messages.map((msg: any) => 
                     msg.id === assistantId ? { ...msg, content: `Error: ${error}`, isError: true } : msg
                 );

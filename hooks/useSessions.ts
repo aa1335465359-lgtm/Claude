@@ -25,6 +25,7 @@ export function useSessions() {
     };
     setSessions(prev => [newSession, ...prev]);
     setCurrentSessionId(newSession.id);
+    return newSession.id;
   };
 
   const deleteSession = (sessionId: string) => {
@@ -34,7 +35,6 @@ export function useSessions() {
         if (newSessions.length > 0) {
           setCurrentSessionId(newSessions[0].id);
         } else {
-          setTimeout(createNewSession, 0);
           setCurrentSessionId(null);
         }
       }
@@ -42,11 +42,12 @@ export function useSessions() {
     });
   };
 
-  const updateCurrentSessionMessages = (newMessages: Message[]) => {
-    if (!currentSessionId) return;
+  const updateCurrentSessionMessages = (newMessages: Message[], specificSessionId?: string) => {
+    const targetId = specificSessionId || currentSessionId;
+    if (!targetId) return;
     
     setSessions(prev => prev.map(s => {
-      if (s.id === currentSessionId) {
+      if (s.id === targetId) {
         let title = s.title;
         if (s.messages.length === 0 && newMessages.length > 0) {
            const firstContent = newMessages[0].content;

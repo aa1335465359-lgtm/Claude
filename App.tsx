@@ -42,20 +42,6 @@ const ChatList = React.memo(({
                 {messages.map((msg) => (
                   <MessageBubble key={msg.id} message={msg} />
                 ))}
-                {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
-                  <div className="flex w-full mb-10 justify-start">
-                    <div className="flex-1 max-w-3xl min-w-0">
-                      <div className="font-semibold text-[#ececec] text-sm mb-3 font-sans flex items-center gap-2 tracking-wide">AI</div>
-                      <div className="flex items-center gap-2 text-[#888] text-sm h-7">
-                        <div className="flex gap-1.5 items-center">
-                          <span className="w-1.5 h-1.5 bg-[#666] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                          <span className="w-1.5 h-1.5 bg-[#666] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                          <span className="w-1.5 h-1.5 bg-[#666] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </>
             )}
              <div ref={messagesEndRef} className="h-2" />
@@ -90,11 +76,30 @@ const App: React.FC = () => {
     setThinkingMode,
     handleSend,
     handleStop
-  } = useChat(currentSessionId, messages, updateCurrentSessionMessages, setSessions);
+  } = useChat(currentSessionId, messages, updateCurrentSessionMessages, setSessions, createNewSession);
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const settingsClickCountRef = useRef(0);
   const settingsResetTimerRef = useRef<any>(null);
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  React.useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const handleSettingsClick = () => {
     if (settingsResetTimerRef.current) {
@@ -112,20 +117,22 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#0a0a0a] text-[#ececec] font-sans overflow-hidden selection:bg-white/20">
+    <div className="flex h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-[#ececec] font-sans overflow-hidden selection:bg-black/10 dark:selection:bg-white/20 transition-colors duration-300">
       <Sidebar 
         sessions={sessions}
         currentSessionId={currentSessionId}
         onSelectSession={setCurrentSessionId}
         onDeleteSession={deleteSession}
         onNewChat={createNewSession}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
       <div className="flex-1 flex flex-col h-full min-w-0 relative">
         <div className="absolute top-4 right-4 z-20">
           <button 
             onClick={handleSettingsClick}
-            className="p-2 text-[#999] hover:text-white rounded-xl transition-all duration-300 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/5"
+            className="p-2 text-gray-400 hover:text-gray-900 dark:text-[#999] dark:hover:text-white rounded-xl transition-all duration-300 bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 backdrop-blur-md border border-black/5 dark:border-white/5"
           >
             <Settings size={18} />
           </button>
@@ -138,7 +145,7 @@ const App: React.FC = () => {
             onSuggestionClick={(text) => setInput(text)} 
         />
 
-        <div className="z-10 bg-[#0a0a0a] pt-2 pb-6">
+        <div className="z-10 bg-white dark:bg-[#0a0a0a] pt-2 pb-6 transition-colors duration-300">
           <ChatInput 
             input={input}
             setInput={setInput}
